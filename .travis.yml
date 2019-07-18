@@ -1,0 +1,6 @@
+before_install:
+    - curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+install:
+    - nimble install
+script:
+    - nimble test
