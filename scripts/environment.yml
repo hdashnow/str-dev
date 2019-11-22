@@ -1,0 +1,7 @@
+name: strling
+channels:
+- bioconda
+dependencies:
+- python=3*
+- pyranges
+- pandas
