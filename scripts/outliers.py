@@ -266,11 +266,9 @@ def main():
     factor = 1 # This was 100 in STRetch
 
     genotype_data['sum_str_log'] = np.log2(factor * (genotype_data['sum_str_counts'] + 1) / genotype_data['depth'])
-    genotype_data['total_reads_log'] = np.log2(factor * (genotype_data['total_reads'] + 1) / genotype_data['depth'])
-
    
     # For each locus, calculate if that sample is an outlier relative to others
-    total_reads_wide = genotype_data.pivot(index='locus', columns='sample', values='total_reads_log')
+    total_reads_wide = genotype_data.pivot(index='locus', columns='sample', values='sum_str_log')
 
 
     sample_depths = genotype_data[['sample', 'depth']].groupby('sample').median()
@@ -379,7 +377,7 @@ def main():
                                     'allele1_est', 'allele2_est',
                                     'total_reads', 'spanning_reads', 'spanning_pairs',
                                     'left_clips', 'right_clips', 'unplaced_pairs',
-                                    'total_reads_log', 'depth',
+                                    'sum_str_counts', 'sum_str_log', 'depth',
                                     'outlier', 'p_adj',
                                     ]]
 
@@ -389,8 +387,8 @@ def main():
     write_data['outlier'] = pd.to_numeric(write_data['outlier'])
     write_data['p_adj'] = [ format(x, '.2g') for x in pd.to_numeric(write_data['p_adj']) ]
     write_data = write_data.round({'outlier': 1, 'sum_str_log': 1,
-                                    'total_reads_log': 1})
-    int_cols = ['left', 'right', 'total_reads', 'spanning_reads', 'spanning_pairs',
+                                    'sum_str_log': 1})
+    int_cols = ['left', 'right', 'total_reads', 'sum_str_counts', 'spanning_reads', 'spanning_pairs',
                 'left_clips', 'right_clips', 'unplaced_pairs']
     write_data[int_cols] = write_data[int_cols].astype('Int64')
 
