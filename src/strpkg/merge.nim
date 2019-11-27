@@ -1,24 +1,14 @@
-#import kmer
-#import math
-#import algorithm
 import msgpack4nim
-#import strutils
-#import times
-#import random
-#import tables
 import hts/bam
 import hts/fai
 import ./cluster
-#import ./collect
 import ./utils
-#import ./genotyper
 import ./genome_strs
-export tread
-export Soft
 import strformat
-#import math
 import argparse
 import ./extract
+export tread
+export Soft
 
 proc merge_main*() =
   var p = newParser("strling merge"):
@@ -88,8 +78,8 @@ proc merge_main*() =
   if not open(bounds_fh, args.output_prefix & "-bounds.txt", mode=fmWrite):
     quit "couldn't open output file"
 
-  #XXX this should already have been estimated for all samples? Take average?
-  var window = 1000#frag_dist.median(0.98)
+  #XXX this should already have been estimated for all samples? Record in bin and take average?
+  var window = frag_dist.median(0.98)
 
   var loci: seq[Bounds]
   if args.loci != "":
