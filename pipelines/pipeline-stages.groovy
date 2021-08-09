@@ -83,7 +83,7 @@ outliers = {
     from("*-genotype.txt", "*-unplaced.txt") produce("STRs.tsv") {
         exec """
             $outliers_py
-                --genotypes  *-genotype.txt
+                --genotypes *-genotype.txt
                 --unplaced *-unplaced.txt
                 --emit control-file.tsv
         """

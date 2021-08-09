@@ -423,7 +423,7 @@ def main():
     #sort by outlier score then estimated size (bpInsertion), both descending
     write_data = write_data.sort_values(['outlier', 'allele2_est'], ascending=[False, False])
     # Convert outlier and p_adj to numeric type and do some rounding/formatting
-    write_data['outlier'] = [ format(x, '.2g') for x in pd.to_numeric(write_data['outlier']) ]
+    write_data['outlier'] = [ format(x, '.4g') for x in pd.to_numeric(write_data['outlier']) ]
     write_data['p'] = [ format(x, '.2g') for x in pd.to_numeric(write_data['p']) ]
     write_data['p_adj'] = [ format(x, '.2g') for x in pd.to_numeric(write_data['p_adj']) ]
     write_data = write_data.round({'sum_str_log': 1})
