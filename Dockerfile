@@ -1,11 +1,17 @@
-FROM python:3.8
+FROM continuumio/miniconda3
 
-RUN git clone https://github.com/quinlan-lab/STRling.git
+#WORKDIR /app
 
-RUN cd STRling && mkdir bin && cd bin && \
-    wget https://github.com/quinlan-lab/STRling/releases/download/v0.3.0/strling && \
-    chmod +x strling
+# Create the environment
+RUN conda config --add channels conda-forge
+RUN conda config --add channels bioconda
+RUN conda create -n strling-install strling
 
-ENV PATH="/STRling/bin:${PATH}"
+# Activate environment
+RUN echo "conda activate strling-install" >> ~/.bashrc
+SHELL ["/bin/bash", "--login", "-c"]
 
+# Check install succeded and environment is active
 RUN strling -h
+RUN strling-outliers.py --help
+
